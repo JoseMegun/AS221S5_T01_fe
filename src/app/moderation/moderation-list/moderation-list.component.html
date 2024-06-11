@@ -1,0 +1,82 @@
+<h1>Moderacion de Texto</h1>
+<!-- Card de datos de entrada -->
+<form (ngSubmit)="listAll()">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <input type="text" class="form-control" id="originalText" placeholder="Texto Original" [(ngModel)]="searchOriginalText"
+          name="searchOriginalText"/>
+      </div>
+      <div class="col-md-4 mb-3">
+        <input type="text" class="form-control" id="normalizedText" placeholder="Texto Normalizado" [(ngModel)]="searchNormalizedText"
+          name="searchNormalizedText"/>
+      </div>
+      <div class="col-md-4 mb-3">
+        <button type="submit" class="btn btn-primary" id="btnBuscar">Buscar</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" [routerLink]="['/moderation/register']">Nuevo <i class="bi bi-plus-lg"></i>
+        </button>
+      </div>
+    </div>
+</form>
+
+<!-- Card de resultados -->
+<div class="table-responsive">
+    <table class="table table-sm">
+      <caption>
+        <div class="card-body">
+          <button type="button" class="btn btn-outline-success" (click)="exportToExcelActive()">Exportar a XLSX</button>
+          &nbsp;
+          <button type="button" class="btn btn-outline-dark" (click)="exportToCSV()">Exportar a CSV</button>
+        </div>
+      </caption>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Texto Original</th>
+          <th>Texto Normalizado</th>
+          <th>Texto Consultado</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let moderation of (showActiveModerations ? activeModerations : inactiveModerations).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+          <td>{{ moderation.id }}</td>
+          <td>{{ moderation.originalText }}</td>
+          <td>{{ moderation.normalizedText }}</td>
+          <td>{{ moderation.consultText }}</td>
+          <td>{{ moderation.status}}</td>
+          <td>
+            <button *ngIf="moderation.status === 'A'" (click)="deleteModeration(moderation.id!)" type="button" class="btn btn-danger btn-sm">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+            <button *ngIf="moderation.status === 'A'" [routerLink]="['/moderation/edit', moderation.id]"
+                            type="button" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+            <button *ngIf="moderation.status === 'I'" (click)="reactivateModeration(moderation.id!)" type="button"
+                            class="btn-update btn btn-success">
+                            <i class="bi bi-bootstrap-reboot"></i>
+                        </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<!-- Paginacion -->
+  <div class="pagination-container">
+
+    <a href="javascript:void(0);" class="pagination-button btn btn-primary" (click)="previousPage()"
+        id="previousPage"><i class="bi bi-caret-left-fill"></i></a>
+    &nbsp;
+    <span id="currentPage" class="pagination-button current">{{ currentPage }}</span>
+    &nbsp;
+    <a href="javascript:void(0);" class="pagination-button btn btn-primary" (click)="nextPage()" id="nextPage"><i
+            class="bi bi-caret-right-fill"></i></a>
+    &nbsp;
+    <button class="pagination-button btn btn-warning" (click)="toggleShowInactive()">
+      {{ showActiveModerations ? 'Mostrar Inactivos' : 'Mostrar Activos' }}
+    </button>    
+    
+</div>

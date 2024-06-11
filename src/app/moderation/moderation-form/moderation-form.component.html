@@ -1,0 +1,42 @@
+<h1>Crear Moderación</h1>
+<div class="container-sm">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #moderationForm="ngForm" novalidate>
+      <!-- Campo para el texto original -->
+      <div class="form-group">
+        <label for="originalText">Texto Original</label>
+        <input type="text" class="form-control" id="originalText" name="originalText" [(ngModel)]="newModeration.originalText" required>
+        <div *ngIf="moderationForm.controls['originalText']?.invalid && (moderationForm.controls['originalText']?.dirty || moderationForm.submitted)"
+            class="text-danger">Por favor, ingresa el texto original.</div>
+      </div>
+      
+      <!-- Campo para el texto normalizado -->
+      <div class="form-group">
+        <label for="normalizedText">Texto Normalizado</label>
+        <input type="text" class="form-control" id="normalizedText" name="normalizedText" [(ngModel)]="newModeration.normalizedText" required disabled>
+        <div *ngIf="moderationForm.controls['normalizedText']?.invalid && (moderationForm.controls['normalizedText']?.dirty || moderationForm.submitted)"
+            class="text-danger">Por favor, ingresa el texto normalizado.</div>
+      </div>
+      
+      <!-- Campo para el texto de consulta -->
+      <div class="form-group">
+        <label for="consultText">Texto de Consulta</label>
+        <input type="text" class="form-control" id="consultText" name="consultText" [(ngModel)]="newModeration.consultText" required disabled>
+        <div *ngIf="moderationForm.controls['consultText']?.invalid && (moderationForm.controls['consultText']?.dirty || moderationForm.submitted)"
+            class="text-danger">Por favor, ingresa el texto de consulta.</div>
+      </div>
+      
+      <!-- Campo para el estado -->
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <input type="text" class="form-control" id="status" name="status" [(ngModel)]="newModeration.status" required disabled>
+        <div *ngIf="moderationForm.controls['status']?.invalid && (moderationForm.controls['status']?.dirty || moderationForm.submitted)"
+            class="text-danger">Por favor, ingresa el estado.</div>
+      </div>
+      
+      <!-- Botones para guardar o cancelar -->
+      <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+      <button type="button" class="btn btn-secondary mt-3 ml-2" (click)="onCancel()">Cancelar</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<h1>Editar Moderación</h1>
+<div class="container">
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #moderationForm="ngForm" novalidate>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="originalText" class="form-label">Texto Original</label>
+                    <input type="text" class="form-control" id="originalText" name="originalText" [(ngModel)]="moderation.originalText" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="normalizedText" class="form-label">Texto Normalizado</label>
+                    <input type="text" class="form-control" id="normalizedText" name="normalizedText" [(ngModel)]="moderation.normalizedText" required disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="status" class="form-label">Estado</label>
+                    <select class="form-control" id="status" name="status" [(ngModel)]="moderation.status" required disabled>
+                        <option value="A">Activo</option>
+                        <option value="I">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            &nbsp;
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+        </form>
+    </div>
+</div>
