@@ -44,4 +44,3 @@ jobs:
 
       - name: Push Docker image
         run: docker push jmegun/as221s5_t01_fe:latest
-
